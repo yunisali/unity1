@@ -1,49 +1,37 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 
 public class fly : MonoBehaviour
 {
-    public GameObject plane;
-    public float speed = 3f;
+    public float speed;
 
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
+    float xRot = 0;
+    float zRot = 0;
+    float yRot = 0;
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector2.right * speed);
-            plane.transform.Rotate(0.0f, 0.0f, -2.0f);
-        }
-        else
-        {
-            plane.transform.Rotate(0.0f, 0.0f, 0.0f);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-Vector2.right * speed);
-            plane.transform.Rotate(.0f, 0.0f, 2.0f);
-
-
-        }
-        else
-        {
-            plane.transform.Rotate(0.0f, 0.0f, 0.0f);
-        }
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector2.up * speed);
+            GetComponent<Rigidbody>().AddForce(Vector3.up * ( speed));
+            
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-Vector2.up * speed);
+            GetComponent<Rigidbody>().AddForce(-Vector3.up * (speed));
+            
         }
+        if (Input.GetKey(KeyCode.A))
+        {
+            GetComponent<Rigidbody>().AddForce(-Vector3.right * ( speed));
+            zRot++;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.right * ( speed));
+            zRot--;
+        }
+        transform.rotation = Quaternion.Euler(GetComponent<Rigidbody>().velocity.magnitude * yRot, 0.0f, GetComponent<Rigidbody>().velocity.magnitude * zRot);
     }
 }
-
