@@ -5,6 +5,7 @@ using UnityEngine;
 public class collisionScript : MonoBehaviour
 {
     public Transform explosion;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +18,13 @@ public class collisionScript : MonoBehaviour
 
 
     }
-    public void OnCollisionEnter(Collision col)
+    public void OnTriggerEnter(Collider col)
     {
 
-        if (col.gameObject.tag.Equals("enemy"))
+        if (col.gameObject.tag.Equals("player"))
         {
             Instantiate(explosion, transform.position, explosion.rotation);
-            Destroy(col.gameObject);
+            Destroy(gameObject);
 
         }
     }
