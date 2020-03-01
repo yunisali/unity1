@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class fly : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class fly : MonoBehaviour
     public Rigidbody rb;
     public Vector3 originalPos;
     public Transform explosionFire;
+    public float zRotP = 125;
+    public float zRotN = -125;
 
     private void Start()
     {
@@ -20,6 +23,18 @@ public class fly : MonoBehaviour
     }
     void Update()
     {
+
+        if (transform.rotation.z >= zRotP)
+        {
+            Instantiate(explosionFire, transform.position, explosionFire.rotation);
+            plane.transform.position = originalPos;
+        }
+        if (transform.rotation.z <= zRotN)
+        {
+            Instantiate(explosionFire, transform.position, explosionFire.rotation);
+            plane.transform.position = originalPos;
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * ( speed));
@@ -47,6 +62,8 @@ public class fly : MonoBehaviour
         pos.y = Mathf.Clamp(transform.position.y, -4, 6);
         pos.x = Mathf.Clamp(transform.position.x, -7, 8);
         transform.position = pos;
+
+        
     }
     public void OnTriggerEnter(Collider col)
     {
@@ -55,9 +72,18 @@ public class fly : MonoBehaviour
         {
             Instantiate(explosionFire, transform.position, explosionFire.rotation);
             plane.transform.position = originalPos;
+            TakeScene();
 
 
         }
+    }
+    public void AddScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void TakeScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
 }
