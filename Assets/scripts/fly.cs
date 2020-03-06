@@ -76,14 +76,38 @@ public class fly : MonoBehaviour
 
 
         }
+        if (col.gameObject.tag.Equals("goal"))
+        {
+          
+            AddScene();
+
+
+        }
     }
     public void AddScene()
     {
+      
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void TakeScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 4);
+        }
+
     }
 
 }
